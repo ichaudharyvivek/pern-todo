@@ -1,11 +1,18 @@
 # List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
 tasks:
+  - name: 'Install Postgres SQL server'
+    before: |
+      # Build docker image
+      docker build -t app-postgres-image .
+    init: |
+      # Start PostgreSQL container using the custom Docker image
+      docker run --name pern-todo-postgres-container -d -p 5432:5432 app-postgres-image
+
   - name: 'Initialize backend server with packages using npm'
-    before: echo "Need to install postgres"
     init: cd server && npm i
     command: echo 'Run `npm run dev` for development mode -OR- `npm start` for production mode'
-    
-  - name: 'Initialize frontend server with packages using npm'
+
+  - name: 'Initialize frontend server'
     init: cd client && npm i
     command: echo "Need proper script to run frontend repository"
 
@@ -21,4 +28,8 @@ ports:
     port: 5000
     onOpen: open-preview
 
+  - name: PostgreSQL Database
+    description: PERN-TODO App Database
+    port: 5432
+    onOpen: ignore # Not need to open a preview for PostgreSQL
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
