@@ -5,10 +5,10 @@ tasks:
       # Build docker image
       docker build -t app-postgres-image .
     init: |
-      # Start PostgreSQL container using the custom Docker image
+      # Start PostgreSQL container using the custom docker image
       docker run --name pern-todo-postgres-container -d -p 5432:5432 app-postgres-image
 
-  - name: 'Initialize backend server with packages using npm'
+  - name: 'Initialize backend server'
     init: cd server && npm i
     command: echo 'Run `npm run dev` for development mode -OR- `npm start` for production mode'
 
