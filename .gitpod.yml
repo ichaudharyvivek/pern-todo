@@ -1,0 +1,24 @@
+# List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
+tasks:
+  - name: 'Initialize backend server with packages using npm'
+    before: echo "Need to install postgres"
+    init: cd server && npm i
+    command: echo 'Run `npm run dev` for development mode -OR- `npm start` for production mode'
+    
+  - name: 'Initialize frontend server with packages using npm'
+    init: cd client && npm i
+    command: echo "Need proper script to run frontend repository"
+
+# List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
+ports:
+  - name: Frontend server
+    description: Client application
+    port: 3000
+    onOpen: open-preview
+
+  - name: Backend server
+    description: Server application
+    port: 5000
+    onOpen: open-preview
+
+# Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
