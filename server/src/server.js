@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+const pool = require('./config/db');
+
 // App initializations
 const app = express();
 app.use(express.json());
