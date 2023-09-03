@@ -1,6 +1,6 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 
 const pool = require('./config/db');
 
@@ -8,7 +8,6 @@ const pool = require('./config/db');
 const app = express();
 app.use(express.json());
 app.use(cors());
-dotenv.config();
 
 // App constants
 const PORT = process.env.PORT || 3000;
@@ -19,6 +18,27 @@ app.get('/', (req, res) => {
     success: true,
     msg: 'Running successfully',
   });
+});
+
+// ============================
+// ROUTES
+// =============================
+
+// CREATE TODO
+app.post('/todo', async (req, res) => {
+  try {
+    const { description } = req.body;
+
+    // Insert into database
+    const newTodo = await pool.query(
+      'INSERT INTO todo_lists(description) VALUES($1)',
+      [description]
+    );
+
+    res.status(200).json({ success: true, data: newTodo });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // Listen to PORT
