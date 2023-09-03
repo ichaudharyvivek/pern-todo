@@ -6,7 +6,7 @@ tasks:
       docker build -t app-postgres-image .
     init: |
       # Start PostgreSQL container using the custom docker image
-      docker run --name pern-todo-postgres-container -d -p 5432:5432 app-postgres-image
+      docker run --name pern-todo-postgres-container -d -p 5432:5432 --env-file ./server/.env app-postgres-image
     command: echo ">> Postgres installation done. You can exit this terminal."
 
   - name: 'Initialize backend server'
