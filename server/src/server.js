@@ -63,7 +63,7 @@ app.get('/todo/:todo_id', async (req, res) => {
     // Get todo with id from the database
     const getTodoWithID = await pool.query(
       'SELECT * FROM todo_lists WHERE todo_id=$1',
-      [id]
+      [todo_id]
     );
 
     res.status(200).json({
@@ -111,7 +111,6 @@ app.delete('/todo/:todo_id', async (req, res) => {
     res.status(200).json({
       success: true,
       count: deletedTodo.rowCount,
-      data: deletedTodo.rows,
     });
   } catch (err) {
     console.log(err);
