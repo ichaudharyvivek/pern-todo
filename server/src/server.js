@@ -31,11 +31,88 @@ app.post('/todo', async (req, res) => {
 
     // Insert into database
     const newTodo = await pool.query(
-      'INSERT INTO todo_lists(description) VALUES($1)',
+      'INSERT INTO todo_lists(description) VALUES($1) RETURNING *',
       [description]
     );
 
-    res.status(200).json({ success: true, data: newTodo });
+    res.status(200).json({ success: true, data: newTodo.rows });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// GET ALL TODOS
+app.get('/todo', async (req, res) => {
+  try {
+    // Get all todos from the database
+    const allTodos = await pool.query('SELECT * FROM todo_lists');
+
+    res
+      .status(200)
+      .json({ success: true, count: allTodos.rowCount, data: allTodos.rows });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// GET TODO WITH ID
+app.get('/todo/:todo_id', async (req, res) => {
+  try {
+    const { todo_id } = req.params;
+
+    // Get todo with id from the database
+    const getTodoWithID = await pool.query(
+      'SELECT * FROM todo_lists WHERE todo_id=$1',
+      [id]
+    );
+
+    res.status(200).json({
+      success: true,
+      count: getTodoWithID.rowCount,
+      data: getTodoWithID.rows,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// UPDATE TODO WITH ID
+app.put('/todo', async (req, res) => {
+  try {
+    const { todo_id, description } = req.body;
+
+    // Update todo with id in the database
+    const updatedTodo = await pool.query(
+      'UPDATE todo_lists SET description=$1 WHERE todo_id=$2 RETURNING *',
+      [description, todo_id]
+    );
+
+    res.status(200).json({
+      success: true,
+      count: updatedTodo.rowCount,
+      data: updatedTodo.rows,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// DELETE TODO WITH ID
+app.delete('/todo/:todo_id', async (req, res) => {
+  try {
+    const { todo_id } = req.params;
+
+    // Delete todo with id in the database
+    const deletedTodo = await pool.query(
+      'DELETE FROM todo_lists WHERE todo_id=$1 RETURNING *',
+      [todo_id]
+    );
+
+    res.status(200).json({
+      success: true,
+      count: deletedTodo.rowCount,
+      data: deletedTodo.rows,
+    });
   } catch (err) {
     console.log(err);
   }
@@ -44,10 +121,4 @@ app.post('/todo', async (req, res) => {
 // Listen to PORT
 const server = app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
-
-// Handle unhandled promise rejection - [For eg. mongodb password is wrong]
-process.on('unhandledRejection', (err) => {
-  console.log('Something went wrong!');
-  server.close(() => process.exit(1));
 });
