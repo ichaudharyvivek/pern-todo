@@ -31,7 +31,7 @@ const EditTodo = ({ todo }) => {
       {/* HTML Edit button */}
       <button
         type='button'
-        class='btn btn-primary w-75 ml-auto mr-auto d-block'
+        className='btn btn-primary w-75 ml-auto mr-auto d-block'
         data-toggle='modal'
         data-target={`#id${todo.todo_id}`}
       >
@@ -40,18 +40,18 @@ const EditTodo = ({ todo }) => {
 
       {/* Bootstrap Modal */}
       <div
-        class='modal'
+        className='modal'
         id={`id${todo.todo_id}`}
         onClick={() => setDescription(todo.description)}
       >
-        <div class='modal-dialog'>
+        <div className='modal-dialog'>
           {/* Modal heading */}
-          <div class='modal-content'>
-            <div class='modal-header'>
-              <h4 class='modal-title'>Edit ToDo</h4>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <h4 className='modal-title'>Edit ToDo</h4>
               <button
                 type='button'
-                class='close'
+                className='close'
                 data-dismiss='modal'
                 onClick={() => setDescription(todo.description)}
               >
@@ -60,7 +60,7 @@ const EditTodo = ({ todo }) => {
             </div>
 
             {/* Modal body */}
-            <div class='modal-body'>
+            <div className='modal-body'>
               <input
                 type='text'
                 className='form-control'
@@ -70,10 +70,10 @@ const EditTodo = ({ todo }) => {
             </div>
 
             {/* Modal footer */}
-            <div class='modal-footer'>
+            <div className='modal-footer'>
               <button
                 type='button'
-                class='btn btn-success'
+                className='btn btn-success'
                 data-dismiss='modal'
                 onClick={(e) => updateDescription(e)}
               >
@@ -82,7 +82,7 @@ const EditTodo = ({ todo }) => {
 
               <button
                 type='button'
-                class='btn btn-danger'
+                className='btn btn-danger'
                 data-dismiss='modal'
                 onClick={() => setDescription(todo.description)}
               >
