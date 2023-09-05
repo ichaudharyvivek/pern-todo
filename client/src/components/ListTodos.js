@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import EditTodo from './EditTodo';
 
 const ListTodos = () => {
   const [todoList, setTodoList] = useState([]);
@@ -23,7 +24,7 @@ const ListTodos = () => {
 
   const deleteTodo = async (todo_id) => {
     try {
-      const deletedTodo = await fetch(
+      const response = await fetch(
         `${process.env.REACT_APP_API_ENDPOINT}/todo/${todo_id}`,
         {
           method: 'DELETE',
@@ -42,7 +43,7 @@ const ListTodos = () => {
       <table className='table table-bordered w-75 ml-auto mr-auto mt-5'>
         <thead>
           <tr>
-            <th className='w-75'>Description</th>
+            <th className='w-75'>Todo List</th>
             <th className='w-25'>Edit</th>
             <th className='w-25'>Delete</th>
           </tr>
@@ -51,7 +52,9 @@ const ListTodos = () => {
           {todoList.map((todo) => (
             <tr key={todo.todo_id}>
               <td>{todo.description}</td>
-              <td>edit</td>
+              <td>
+                <EditTodo todo={todo} />
+              </td>
               <td>
                 <button
                   className='btn btn-danger'

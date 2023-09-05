@@ -20,10 +20,9 @@ const InputTodo = () => {
         }
       );
 
-      console.log('Response: ', response); // Show response in console
       window.location = '/'; // Refreshes the page to reset input field
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -39,6 +38,7 @@ const InputTodo = () => {
           className='form-control mr-3'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          placeholder='Write your todo here...'
         />
         <button className='btn btn-success'>Add &#43;</button>
       </form>
