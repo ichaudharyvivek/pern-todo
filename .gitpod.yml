@@ -15,7 +15,7 @@ tasks:
 
   - name: 'Initialize frontend server'
     init: cd client && npm i
-    command: echo ">> Need proper script to run frontend repository"
+    command: echo ">> Run `npm run start:dev` for development mode -OR- `npm run build:beta` for production mode"
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
@@ -32,5 +32,5 @@ ports:
   - name: PostgreSQL Database
     description: PERN-TODO App Database
     port: 5432
-    onOpen: ignore # Not need to open a preview for PostgreSQL
+    onOpen: ignore
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
