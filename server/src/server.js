@@ -37,7 +37,7 @@ app.post('/todo', async (req, res) => {
 
     res.status(200).json({ success: true, data: newTodo.rows });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 });
 
@@ -51,7 +51,7 @@ app.get('/todo', async (req, res) => {
       .status(200)
       .json({ success: true, count: allTodos.rowCount, data: allTodos.rows });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 });
 
@@ -72,7 +72,7 @@ app.get('/todo/:todo_id', async (req, res) => {
       data: getTodoWithID.rows,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 });
 
@@ -93,7 +93,7 @@ app.put('/todo', async (req, res) => {
       data: updatedTodo.rows,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 });
 
@@ -113,7 +113,7 @@ app.delete('/todo/:todo_id', async (req, res) => {
       count: deletedTodo.rowCount,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 });
 
