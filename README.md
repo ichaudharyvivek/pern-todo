@@ -1,6 +1,6 @@
 # PERN TODO APP
 
-Simple TODO app build using PERN stack. PERN stands for PostgreSQL, Express, React and Node.js. This project is built on gitpod as CDE.
+Simple TODO app build using PERN stack. Stands for PostgreSQL, Express, React and Node.js. This project is built on gitpod as CDE.
 
 ## Usage
 
