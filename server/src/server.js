@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const pool = require('./config/db');
+const pool = require('./db/client');
+const db = require('./db');
 
 // App initializations
 const app = express();
@@ -30,10 +31,7 @@ app.post('/todo', async (req, res) => {
     const { description } = req.body;
 
     // Insert into database
-    const newTodo = await pool.query(
-      'INSERT INTO todo_lists(description) VALUES($1) RETURNING *',
-      [description]
-    );
+    const newTodo = await pool.query(db.todoQueries.insertTodo, [description]);
 
     res.status(200).json({ success: true, data: newTodo.rows });
   } catch (err) {
@@ -45,7 +43,7 @@ app.post('/todo', async (req, res) => {
 app.get('/todo', async (req, res) => {
   try {
     // Get all todos from the database
-    const allTodos = await pool.query('SELECT * FROM todo_lists');
+    const allTodos = await pool.query(db.todoQueries.getAllTodos);
 
     res
       .status(200)
@@ -61,10 +59,9 @@ app.get('/todo/:todo_id', async (req, res) => {
     const { todo_id } = req.params;
 
     // Get todo with id from the database
-    const getTodoWithID = await pool.query(
-      'SELECT * FROM todo_lists WHERE todo_id=$1',
-      [todo_id]
-    );
+    const getTodoWithID = await pool.query(db.todoQueries.getTodoById, [
+      todo_id,
+    ]);
 
     res.status(200).json({
       success: true,
@@ -82,10 +79,10 @@ app.put('/todo', async (req, res) => {
     const { todo_id, description } = req.body;
 
     // Update todo with id in the database
-    const updatedTodo = await pool.query(
-      'UPDATE todo_lists SET description=$1 WHERE todo_id=$2 RETURNING *',
-      [description, todo_id]
-    );
+    const updatedTodo = await pool.query(db.todoQueries.updateTodoById, [
+      description,
+      todo_id,
+    ]);
 
     res.status(200).json({
       success: true,
@@ -103,10 +100,9 @@ app.delete('/todo/:todo_id', async (req, res) => {
     const { todo_id } = req.params;
 
     // Delete todo with id in the database
-    const deletedTodo = await pool.query(
-      'DELETE FROM todo_lists WHERE todo_id=$1 RETURNING *',
-      [todo_id]
-    );
+    const deletedTodo = await pool.query(db.todoQueries.deleteTodoById, [
+      todo_id,
+    ]);
 
     res.status(200).json({
       success: true,

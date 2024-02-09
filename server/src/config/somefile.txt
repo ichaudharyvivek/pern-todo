@@ -1,0 +1,4 @@
+This folder will contain configuration files like
+- env
+- application constants, etc.
+
